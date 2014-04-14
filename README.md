@@ -1,13 +1,7 @@
 # LivePosition
-
-
-
-
-# Ausbildungsnachweis-Generator
-
 Shows the position off my iPhone on a map.
 
-This project is based on "Big Brother GPS"
+This project is based on "[Big Brother GPS](http://bk.gnarf.org/creativity/bigbrothergps/)"
 
 "I'll be honest, I'm throwing science at the walls here to see what sticks." ~Cave Johnson
 

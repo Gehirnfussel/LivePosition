@@ -6,8 +6,8 @@
   jay@summet.com
 */
 
-$name = "Jan";
-$logfile = "/tmp/position.cur";
+$name = "Jans iPhone";
+$logfile = "position.cur";
 
 
 /**********************************************************************/
@@ -35,65 +35,56 @@ $time = strftime("%Y-%m-%d %H:%M:%S", $time);
 $utime = urlencode($time);
 $uname = urlencode($name);
 
-?>
 
-<html>
+#error_reporting(E_ALL);
+#ini_set('display_errors', 1);
+
+# turn on GZIP-compression
+if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandler"); else ob_start();
+?>
+<html lang="de">
 <head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript">
-  function initialize() {
-    var latlng = new google.maps.LatLng(<?=$lat?>,<?=$lon?>);
-    var myOptions = {
-      zoom: 16,
-      center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    var marker = new google.maps.Marker({
-      position: latlng,
-      map: map,
-      title:"<?=$name?>"
-  });
-    var previousLocations = [
-<?php
- /*Draw a polyline to each previous data point*/
- for($i=0; $i < count($lines); $i++) {
-    $p = $lines[$i];
-    $p = explode(":", $p);
-    $time = $p[0];
-    $lat = $p[1];
-    $lon = $p[2];
-    $acc = $p[3];
-    $acc = (int)$acc;
-    $time = strftime("%Y-%m-%d %H:%M:%S", $time);
-    echo "new google.maps.LatLng($lat,$lon),\n" ;
- }
-?>
-  ]; /* end array of previous positions */
+	<meta charset="utf-8" />
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="shortcut icon" href="favicon.ico" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui, user-scalable=no" />
+	<title>Wo ist Jan?</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
+	<link href="style.css" rel="stylesheet" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script type="text/javascript">
+	function initialize() {
+		var latlng = new google.maps.LatLng(<?=$lat?>,<?=$lon?>);
+		var myOptions = {
+			zoom: 13,
+			center: latlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+		var image = 'me.png';
+		var marker = new google.maps.Marker({
+			position: latlng,
+			map: map,
+			icon: image
+		});
+	}
 
- var prevPos = new google.maps.Polyline( {
-   path: previousLocations,
-   strokeColor: "#FF0000",
-   strokeOpacity: 1.0,
-   strokeWeight: 2,
-   map: map
-  });
-
-
-  } // end Initialize
-
-</script>
+	google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
 </head>
-<body onload="initialize()">
+<body>
 
-<p>
-  Latitude: <?=$lat?>  Longitude: <?=$lon?> <br />
-  Accuracy: <?=$acc?> m<br />
-  Updated: <?=$time?> <br />
-</p>
+<div id="info">
+<p>Genauigkeit: <?=$acc?>m<br />
+	Letztes Update: <?=$time?></p>
+</div>
 
-  <div id="map_canvas" style="width:90%; height:80%"></div>
+<div id="map_canvas"></div>
+<noscript>
+	<iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"  src="http://maps.google.com/?ie=UTF8&amp;q=Last+Update:+<?=$utime?>&lt;br&gt;Accuracy:+<?=$acc?>m(<?=$uname?>)@<?=$pos?>&amp;ll=<?=$pos?>&amp;z=13&amp;output=embed">
+</iframe>
+</noscript>
 
 </body>
 </html>
