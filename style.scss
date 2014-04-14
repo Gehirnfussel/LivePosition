@@ -1,37 +1,17 @@
-//*-- Mixin --*
-
-@mixin box-sizing($model) {
-	-webkit-box-sizing: $model;
-	-moz-box-sizing: $model;
-	box-sizing: $model;
-}
-
-//*-- Content --*
-
+//*-- Reset --*
 
 *, *::before, *::after {
-	@include box-sizing(border-box);
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
 }
 
-.clearfix::before,
-.clearfix::after {
-	content: " ";
-	display: table;
-}
-
-.clearfix::after {
-	clear: both;
-}
-
-.clearfix {
-	*zoom: 1;
-}
-
+//*-- Content --*
 
 body {
-	font-family: 'Open Sans', Helvetica, Calibre, Arial, sans-serif;
+	font-family: 'Open Sans', Helvetica, Calibri, Arial, sans-serif;
 }
 
 #info {
@@ -39,11 +19,11 @@ body {
 	bottom: 1.1em;
 	right: 0.0em;
 	font-size: 0.65em;
-	color: #222222;
-	padding: 0.1em;
+	color: #222;
+	padding: 0.4em;
 	text-align: right;
-	background: rgba(255,255,255,0.5);
-	z-index: 9999;
+	background: rgba(255,255,255,0.7);
+	z-index: 10;
 }
 
 #map_canvas {

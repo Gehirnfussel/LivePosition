@@ -1,18 +1,17 @@
 # LivePosition
-Shows the position off my iPhone on a map.
-
+Shows the position of my iPhone on a map.
 This project is based on "[Big Brother GPS](http://bk.gnarf.org/creativity/bigbrothergps/)"
 
 "I'll be honest, I'm throwing science at the walls here to see what sticks." ~Cave Johnson
 
 ## ToDos
-* I don't know
+* Add some settings
+* choose between 'Google Maps' and 'Open Street Map'
 
 ## Requirements
 * PHP
-* a Browser
-* an App to push the location
-* Good & Free iOS-App: [Big Bro GPS](https://itunes.apple.com/de/app/big-bro-gps/id672699424?mt=8)
+* a browser
+* an App to push the location: Good & Free iOS App: [Big Bro GPS](https://itunes.apple.com/de/app/big-bro-gps/id672699424?mt=8)
 
 ## Demo
 * [Demo](http://j.mp/woistjan)
