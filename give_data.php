@@ -1,6 +1,6 @@
 <?php
-// config
-$password = "Fucker!";
+// Load settings
+require 'settings.inc';
 
 // Getting data
 $lat = $_POST["latitude"];
@@ -16,13 +16,10 @@ if ($secret != $password) {
 
 // Write to file
 if ($lat && $lon && $acc) {
-    $fcur = fopen("position.cur", "w");
-
+    $fcur = fopen($logfile, "w");
     $time = time();
     $out = "$time:$lat:$lon:$acc:$battery\n";
-
     fputs($fcur, $out);
-
     fclose($fcur);
 }
 ?>

@@ -6,8 +6,9 @@ This project is a fork of "[Big Brother GPS](http://bk.gnarf.org/creativity/bigb
 “I'll be honest, I'm throwing science at the walls here to see what sticks.” ~Cave Johnson
 
 ## ToDos
-* Add some settings
 * choose between 'Google Maps' and 'Open Street Map'
+* password-protection
+* control-panel for settings
 
 ## Requirements
 * PHP
@@ -25,4 +26,4 @@ This project is a fork of "[Big Brother GPS](http://bk.gnarf.org/creativity/bigb
 LivePosition is freely distributable under the terms of the GPL v2 license.
 
 ## Created by
-* @Gehirnfussel [(Twitter ](http://twitter.com/gehirnfussel)| [ App.net)](http://alpha.app.net/gehirnfussel)
+* Gehirnfussel ([Twitter ](http://twitter.com/gehirnfussel)| [ App.net](http://alpha.app.net/gehirnfussel))

@@ -1,14 +1,6 @@
 <?php
-// Debug Mode
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Settings
-
-$logfile = "position.cur";
-$lesser_accuracy = "8"; // max = 17 | min = 1 | standard = 8
-$zoom = 15;
-$circle = 0;
+// Load settings
+require 'settings.inc';
 
 // read data OR die if there is no data
 $lines = file($logfile);
