@@ -15,6 +15,9 @@ $password = 'Fucker!';
 // Sets the position for the logfile
 $logfile = 'position.cur';
 
+// Display raw data
+$raw_output = TRUE;
+
 // Adds some anonymity to your position:
 // Where 1 is like continents
 // and where 8 is like your actual position (accuracy ~10m).
@@ -27,7 +30,7 @@ $zoom = 15;
 
 // Should there be a circle around your current position?
 // Number is radius in meters
-$circle = 0;
+$circle_width = 0;
 
 // If your $lesser_accuracy is below "7"
 // there will be an automatic circle to your position

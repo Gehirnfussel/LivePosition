@@ -2,6 +2,13 @@
 // Load settings
 require 'settings.inc';
 
+// Output RAW DATA
+if (isset($_GET["raw"])) {
+	$raw_output = TRUE;
+} else {
+	$raw_output = FALSE;
+}
+
 // read data OR die if there is no data
 $lines = file($logfile);
 
@@ -26,39 +33,45 @@ if ($lesser_accuracy < 17) {
 	$lon = substr($lon, 0, $lesser_accuracy);
 }
 
-
 if ($lesser_accuracy <= 1) {
 	$acc = "∞ ";
 	$zoom = 3;
-	$circle = 6000000;
+	$circle_width = 6000000;
 } elseif ($lesser_accuracy == 2) {
 	$acc = "∞ ";
 	$zoom = 5;
-	$circle = 500000;
+	$circle_width = 500000;
 } elseif ($lesser_accuracy == 3) {
 	$acc = "∞ ";
 	$zoom = 7;
-	$circle = 50000;
+	$circle_width = 50000;
 } elseif ($lesser_accuracy == 4) {
 	$acc = 5000;
 	$zoom = 12;
-	$circle = 5000;
+	$circle_width = 5000;
 } elseif ($lesser_accuracy == 5) {
 	$acc = 1000;
 	$zoom = 14;
-	$circle = 1000;
+	$circle_width = 1000;
 } elseif ($lesser_accuracy == 6) {
 	$acc = 50;
 	$zoom = 15;
-	$circle = 50;
+	$circle_width = 50;
 } elseif ($lesser_accuracy >= 7) {
 	$acc = 10;
 	$zoom = 15;
 }
+
 if ($circle_auto == FALSE) {
-	$circle = 0;
+	$circle_width = 0;
 }
 
+if ($raw_output == TRUE) {
+	echo "$time|$lat|$lon|$acc|$bat";
+	die();
+}
+
+// prepare data
 $pos = "$lat,$lon";
 $time = strftime("%Y-%m-%d %H:%M:%S", $time);
 $utime = urlencode($time);
@@ -85,7 +98,7 @@ if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandl
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-		var image = 'marker.png';
+		var image = 'img/marker.png';
 		var marker = new google.maps.Marker({
 			position: latlng,
 			map: map,
@@ -99,7 +112,7 @@ if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandl
 			fillOpacity: 0.35,
 			map: map,
 			center: latlng,
-			radius: <?php echo $circle; ?>
+			radius: <?php echo $circle_width; ?>
     };
     // Add the circle for this city to the map.
     cityCircle = new google.maps.Circle(populationOptions);

@@ -5,6 +5,12 @@ This project is a fork of "[Big Brother GPS](http://bk.gnarf.org/creativity/bigb
 
 “I'll be honest, I'm throwing science at the walls here to see what sticks.” ~Cave Johnson
 
+## Features
+
+* display your position on a google map
+* add some anonymity to your position (to be set in settings.inc)
+* display raw output by adding ?raw (index.php?raw)
+
 ## ToDos
 * choose between 'Google Maps' and 'Open Street Map'
 * password-protection
