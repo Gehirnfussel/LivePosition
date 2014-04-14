@@ -10,16 +10,16 @@ ini_set('display_errors', 1);
 //‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 // Password for updating files
-$password = "Fucker!";
+$password = 'Fucker!';
 
 // Sets the position for the logfile
-$logfile = "position.cur";
+$logfile = 'position.cur';
 
 // Adds some anonymity to your position:
 // Where 1 is like continents
 // and where 8 is like your actual position (accuracy ~10m).
 // (Yep, it goes to 17, but it won't make a real difference…)
-$lesser_accuracy = "5"; // max = 17 | min = 1 | standard = 8
+$lesser_accuracy = 8; // max = 17 | min = 1 | standard = 8
 
 // How far should the map-view zoom into your position?
 // higher is nearer
@@ -32,6 +32,9 @@ $circle = 0;
 // If your $lesser_accuracy is below "7"
 // there will be an automatic circle to your position
 // change to "FALSE" to deactivate this.
-$auto_circle = TRUE;
+$circle_auto = TRUE;
+
+// Color of the circle
+$circle_color = '#6dbcff';
 
 ?>

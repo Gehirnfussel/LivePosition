@@ -44,9 +44,9 @@ if ($lesser_accuracy <= 1) {
 	$zoom = 12;
 	$circle = 5000;
 } elseif ($lesser_accuracy == 5) {
-	$acc = 500;
+	$acc = 1000;
 	$zoom = 14;
-	$circle = 500;
+	$circle = 1000;
 } elseif ($lesser_accuracy == 6) {
 	$acc = 50;
 	$zoom = 15;
@@ -55,7 +55,7 @@ if ($lesser_accuracy <= 1) {
 	$acc = 10;
 	$zoom = 15;
 }
-if ($auto_circle == FALSE) {
+if ($circle_auto == FALSE) {
 	$circle = 0;
 }
 
@@ -91,15 +91,15 @@ if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandl
 			map: map,
 			icon: image
 		});
-		    var populationOptions = {
-      strokeColor: '#6dbcff',
-      strokeOpacity: 0.8,
-      strokeWeight: 2,
-      fillColor: '#6dbcff',
-      fillOpacity: 0.35,
-      map: map,
-      center: new google.maps.LatLng(<?php echo $pos; ?>),
-      radius: <?php echo $circle; ?>
+		var populationOptions = {
+			strokeColor: '<?php echo $circle_color; ?>',
+			strokeOpacity: 0.8,
+			strokeWeight: 2,
+			fillColor: '<?php echo $circle_color; ?>',
+			fillOpacity: 0.35,
+			map: map,
+			center: latlng,
+			radius: <?php echo $circle; ?>
     };
     // Add the circle for this city to the map.
     cityCircle = new google.maps.Circle(populationOptions);
