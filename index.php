@@ -2,7 +2,7 @@
 // Load settings
 require 'settings.inc';
 
-// Output RAW DATA
+// Display RAW DATA?
 if (isset($_GET["raw"])) {
 	$raw_output = TRUE;
 } else {
@@ -66,6 +66,7 @@ if ($circle_auto == FALSE) {
 	$circle_width = 0;
 }
 
+// Output RAW DATA or continue
 if ($raw_output == TRUE) {
 	echo "$time|$lat|$lon|$acc|$bat";
 	die();
