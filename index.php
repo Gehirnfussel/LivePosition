@@ -26,6 +26,7 @@ if ($lesser_accuracy < 17) {
 	$lon = substr($lon, 0, $lesser_accuracy);
 }
 
+
 if ($lesser_accuracy <= 1) {
 	$acc = "∞ ";
 	$zoom = 3;
@@ -44,7 +45,7 @@ if ($lesser_accuracy <= 1) {
 	$circle = 5000;
 } elseif ($lesser_accuracy == 5) {
 	$acc = 500;
-	$zoom = 13;
+	$zoom = 14;
 	$circle = 500;
 } elseif ($lesser_accuracy == 6) {
 	$acc = 50;
@@ -53,6 +54,9 @@ if ($lesser_accuracy <= 1) {
 } elseif ($lesser_accuracy >= 7) {
 	$acc = 10;
 	$zoom = 15;
+}
+if ($auto_circle == FALSE) {
+	$circle = 0;
 }
 
 $pos = "$lat,$lon";

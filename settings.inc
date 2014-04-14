@@ -15,10 +15,11 @@ $password = "Fucker!";
 // Sets the position for the logfile
 $logfile = "position.cur";
 
-// Adds some anonymity to your position
-// where 1 is like continents
-// and where 8 is like your house (accuracy ~10m)
-$lesser_accuracy = "8"; // max = 17 | min = 1 | standard = 8
+// Adds some anonymity to your position:
+// Where 1 is like continents
+// and where 8 is like your actual position (accuracy ~10m).
+// (Yep, it goes to 17, but it won't make a real difference…)
+$lesser_accuracy = "5"; // max = 17 | min = 1 | standard = 8
 
 // How far should the map-view zoom into your position?
 // higher is nearer
@@ -27,5 +28,10 @@ $zoom = 15;
 // Should there be a circle around your current position?
 // Number is radius in meters
 $circle = 0;
+
+// If your $lesser_accuracy is below "7"
+// there will be an automatic circle to your position
+// change to "FALSE" to deactivate this.
+$auto_circle = TRUE;
 
 ?>
