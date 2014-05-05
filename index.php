@@ -9,11 +9,11 @@ if (isset($_GET["raw"])) {
 	$raw_output = FALSE; // Default
 }
 
-// Draggable Map?
-if (isset($_GET["nondraggable"])) {
-	$draggable = 0;
+// Static Map?
+if (isset($_GET["notstatic"])) {
+	$notstatic = 0;
 } else {
-	$draggable = 1; // Default
+	$notstatic = 1; // Default (No)
 }
 
 // More UI?
@@ -111,7 +111,13 @@ if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandl
 			zoom: <?php echo $zoom; ?>,
 			center: latlng,
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			draggable: <?php echo $draggable; ?>,
+			draggable: <?php echo $notstatic; ?>,
+			zoomControl: <?php echo $notstatic; ?>,
+			streetViewControl: <?php echo $notstatic; ?>,
+			panControl: <?php echo $notstatic; ?>,
+			keyboardShortcuts: <?php echo $notstatic; ?>,
+			scaleControl: <?php echo $notstatic; ?>,
+			scrollwheel: <?php echo $notstatic; ?>,
 		};
 		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 		var image = 'img/marker.png';
