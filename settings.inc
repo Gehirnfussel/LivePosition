@@ -40,4 +40,8 @@ $circle_auto = TRUE;
 // Color of the circle
 $circle_color = '#6dbcff';
 
+// Draggable Map?
+// Default = 1 (Yes)
+$draggable = 0;
+
 ?>

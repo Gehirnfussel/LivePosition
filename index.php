@@ -6,7 +6,21 @@ require 'settings.inc';
 if (isset($_GET["raw"])) {
 	$raw_output = TRUE;
 } else {
-	$raw_output = FALSE;
+	$raw_output = FALSE; // Default
+}
+
+// Draggable Map?
+if (isset($_GET["nondraggable"])) {
+	$draggable = 0;
+} else {
+	$draggable = 1; // Default
+}
+
+// More UI?
+if (isset($_GET["lesserinfo"])) {
+	$lesserinfo = FALSE;
+} else {
+	$lesserinfo = TRUE; // Default
 }
 
 // read data OR die if there is no data
@@ -96,14 +110,15 @@ if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandl
 		var myOptions = {
 			zoom: <?php echo $zoom; ?>,
 			center: latlng,
-			mapTypeId: google.maps.MapTypeId.ROADMAP
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			draggable: <?php echo $draggable; ?>,
 		};
 		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 		var image = 'img/marker.png';
 		var marker = new google.maps.Marker({
 			position: latlng,
 			map: map,
-			icon: image
+			icon: image,
 		});
 		var populationOptions = {
 			strokeColor: '<?php echo $circle_color; ?>',
@@ -124,10 +139,13 @@ if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandl
 </head>
 <body>
 
-<div id="info">
-<p>Battery: <?php echo substr($bat, -3, 2); ?>% &middot; Accuracy: <?php echo $acc; ?>m<br />
-Last seen: <?php echo $time; ?></p>
-</div>
+<?php if ($lesserinfo !== FALSE) {
+	echo'<div id="info">
+<p>Battery: '.substr($bat, -3, 2).'% &middot; Accuracy: '.$acc.'m<br />
+Last seen: '.$time.'</p>
+</div>';
+}
+?>
 
 <div id="map_canvas"></div>
 <noscript>
