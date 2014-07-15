@@ -101,6 +101,7 @@ if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandl
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui, user-scalable=no" />
 	<title>Wo ist Jan? &middot; Live location updates of @Gehirnfussel</title>
 	<link href="style.css" rel="stylesheet" />
+	<meta http-equiv="refresh" content="7200" />
 	<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
