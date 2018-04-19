@@ -1,164 +1,93 @@
 <?php
-// Load settings
-require 'settings.inc';
+include 'settings.inc.php';
 
-// Display RAW DATA?
-if (isset($_GET["raw"])) {
-	$raw_output = TRUE;
-} else {
-	$raw_output = FALSE; // Default
-}
+$phonetrack_api_key = substr($phonetrack_json_url, -32);
+$location_json = utf8_encode(file_get_contents($phonetrack_json_url));
+$location_decoded = json_decode($location_json, true);
 
-// Static Map?
-if (isset($_GET["notstatic"])) {
-	$notstatic = 0;
-} else {
-	$notstatic = 1; // Default (No)
-}
-
-// More UI?
-if (isset($_GET["lesserinfo"])) {
-	$lesserinfo = FALSE;
-} else {
-	$lesserinfo = TRUE; // Default
-}
-
-// read data OR die if there is no data
-$lines = file($logfile);
-
-if (count($lines) < 1){
-print "Error! data file $logfile empty.";
-die();
-}
-
-// split raw data
-$data = explode(":", $lines[0]);
-
-// write data to strings
-$time = $data[0];
-$lat = $data[1];
-$lon = $data[2];
-$acc = $data[3];
-$bat = $data[4];
-
-// lesser the accuracy
-if ($lesser_accuracy < 17) {
-	$lat = substr($lat, 0, $lesser_accuracy);
-	$lon = substr($lon, 0, $lesser_accuracy);
-}
-
-if ($lesser_accuracy <= 1) {
-	$acc = "∞ ";
-	$zoom = 3;
-	$circle_width = 6000000;
-} elseif ($lesser_accuracy == 2) {
-	$acc = "∞ ";
-	$zoom = 5;
-	$circle_width = 500000;
-} elseif ($lesser_accuracy == 3) {
-	$acc = "∞ ";
-	$zoom = 7;
-	$circle_width = 50000;
-} elseif ($lesser_accuracy == 4) {
-	$acc = 5000;
-	$zoom = 12;
-	$circle_width = 5000;
-} elseif ($lesser_accuracy == 5) {
-	$acc = 1000;
-	$zoom = 14;
-	$circle_width = 1000;
-} elseif ($lesser_accuracy == 6) {
-	$acc = 50;
-	$zoom = 15;
-	$circle_width = 50;
-} elseif ($lesser_accuracy >= 7) {
-	$acc = 10;
-	$zoom = 15;
-}
-
-if ($circle_auto == FALSE) {
-	$circle_width = 0;
-}
-
-// Output RAW DATA or continue
-if ($raw_output == TRUE) {
-	echo "$time|$lat|$lon|$acc|$bat";
-	die();
-}
-
-// prepare data
-$pos = "$lat,$lon";
-$time = strftime("%Y-%m-%d %H:%M:%S", $time);
-$utime = urlencode($time);
-
-// turn on GZIP-compression
-if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandler"); else ob_start();
+$location_decoded_latitude = $location_decoded[$phonetrack_api_key][$phonetrack_device_name]['lat'];
+$location_decoded_longitude = $location_decoded[$phonetrack_api_key][$phonetrack_device_name]['lon'];
+$location_decoded_timestamp = $location_decoded[$phonetrack_api_key][$phonetrack_device_name]['timestamp'];
+$location_decoded_battery = $location_decoded[$phonetrack_api_key][$phonetrack_device_name]['batterylevel'];
+$location_decoded_accuracy = $location_decoded[$phonetrack_api_key][$phonetrack_device_name]['accuracy'];
 ?>
-<html lang="de">
+<!DOCTYPE html>
+<html>
 <head>
 	<meta charset="utf-8" />
+	<title>Wo ist Jan? &middot; Live tracking</title>
+	<link href='//maps.googleapis.com' rel='preconnect' crossorigin />
+	<link rel="apple-touch-icon" href="apple-touch-icon.png" type="image/png" />
 	<link rel="shortcut icon" href="favicon.ico" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui, user-scalable=no" />
-	<title>Wo ist Jan? &middot; Live location updates of @Gehirnfussel</title>
-	<link href="style.css" rel="stylesheet" />
-	<meta http-equiv="refresh" content="7200" />
-	<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-	<script type="text/javascript">
-	function initialize() {
-		var latlng = new google.maps.LatLng(<?php echo $pos; ?>);
-		var myOptions = {
-			zoom: <?php echo $zoom; ?>,
-			center: latlng,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			draggable: <?php echo $notstatic; ?>,
-			zoomControl: <?php echo $notstatic; ?>,
-			streetViewControl: <?php echo $notstatic; ?>,
-			panControl: <?php echo $notstatic; ?>,
-			keyboardShortcuts: <?php echo $notstatic; ?>,
-			scaleControl: <?php echo $notstatic; ?>,
-			scrollwheel: <?php echo $notstatic; ?>,
-		};
-		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-		var image = 'img/marker.png';
-		var marker = new google.maps.Marker({
-			position: latlng,
-			map: map,
-			icon: image,
-		});
-		var populationOptions = {
-			strokeColor: '<?php echo $circle_color; ?>',
-			strokeOpacity: 0.8,
-			strokeWeight: 2,
-			fillColor: '<?php echo $circle_color; ?>',
-			fillOpacity: 0.35,
-			map: map,
-			center: latlng,
-			radius: <?php echo $circle_width; ?>
-    };
-    // Add the circle for this city to the map.
-    cityCircle = new google.maps.Circle(populationOptions);
-	}
+	<meta name="viewport" content="initial-scale=1, user-scalable=no, width=device-width" />
+	<meta http-equiv="refresh" content="3600" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<meta name="author" content="Jan Jastrow" />
+	<meta name="description" content="Live location tracking on Google Maps" />
+	<meta property="og:title" content="Wo ist Jan? &middot; Live tracking" />
+    <meta property="og:description" content="See the location of Jan Jastrow live an on a map" />
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="img/opengraph.jpg" />
+	<meta property="og:image:type" content="image/jpeg" />
+	<meta name="robots" content="index, follow" />
+	<style>
+		#map {
+		height: 100%;
+		}
 
-	google.maps.event.addDomListener(window, 'load', initialize);
-	</script>
+		html, body {
+			box-sizing: border-box;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+			font-size: 16px;
+		}
+
+		#info {
+			background: rgba(255,255,255,0.7);
+			color: #222;
+			font-size: 0.65em;
+			left: 0.4em;
+			padding: 0.4em;
+			position: absolute;
+			top: 0.4em;
+			z-index: 10;
+		}
+
+		#info p {
+			margin: 0;
+		}
+	</style>
 </head>
 <body>
+	<div id="map"></div>
+	<div id="info">
+		<p>Last location update:<br />
+		<?php echo strftime('%Y-%m-%d %H:%M:%S', $location_decoded_timestamp); ?>
+		</p>
+	</div>
+	<script>
+	function initMap() {
+		var myLatLng = {lat: <?=$location_decoded_latitude?>, lng: <?=$location_decoded_longitude?>};
+		var map = new google.maps.Map(document.getElementById('map'), {
+			zoom: 15,
+			center: myLatLng,
+			disableDefaultUI: true,
+			zoomControl: true,
+		});
 
-<?php if ($lesserinfo !== FALSE) {
-	echo'<div id="info">
-<p>Battery: '.substr($bat, -3, 2).'% &middot; Accuracy: '.$acc.'m<br />
-Last seen: '.$time.'</p>
-</div>';
-}
-?>
-
-<div id="map_canvas"></div>
-<noscript>
-	<iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"  src="http://maps.google.com/?ie=UTF8&amp;q=Last+Update:+<?=$time?>&lt;br&gt;Accuracy:+<?=(int)$acc?>m(<?=$uname?>)@<?=$pos?>&amp;ll=<?=$pos?>&amp;z=13&amp;output=embed">
-</iframe>
-</noscript>
-
+		var marker = new google.maps.Marker({
+			position: myLatLng,
+			map: map,
+			title: "Jan ist hier",
+			icon: 'img/marker.png',
+		});
+	}
+	</script>
+	<script async defer	src="https://maps.googleapis.com/maps/api/js?key=<?=$googlemaps_api_key?>&callback=initMap"></script>
 </body>
 </html>

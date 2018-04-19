@@ -1,35 +1,35 @@
-# LivePosition
-Shows the position of my iPhone on a map.
+# LiveLocationMap 📍
+Shows the location of a person/smartphone on a map.
 
-This project is a fork of "[Big Brother GPS](http://bk.gnarf.org/creativity/bigbrothergps/)"
+## About 🐝
+Initially this project was a fork of "[Big Brother GPS](http://bk.gnarf.org/creativity/bigbrothergps/)".
+But since that project seems dead (and the iOS App also has not received any updates since 2014), I have now rewritten most of my original code.
+Location updates are now provided by "[PhoneTrack](https://gitlab.com/eneiluj/phonetrack-oc)" and [OwnTracks](http://owntracks.org).
 
-“I'll be honest, I'm throwing science at the walls here to see what sticks.” ~Cave Johnson
+## Features 📖
+* Display your location on Google Maps
+* Optional pseudonymization for your location
 
-## Features
+## Requirements ✅
+* PHP 5.6+
+* Google Maps API Key [(🔑)](https://developers.google.com/maps/documentation/javascript/get-api-key)
+* Nextcloud/Owncloud with installed [PhoneTrack App](https://gitlab.com/eneiluj/phonetrack-oc)
+* An App like [OwnTracks](http://owntracks.org) to provide the location data
 
-* display your position on a google map
-* add some anonymity to your position (to be set in settings.inc)
-* display raw output by adding ?raw (index.php?raw)
+## Changelog 📝
+* 0.3 - Rewritten 🎉 with Google Maps APIv3, PhoneTrack backend and new license
+* 0.2.1 - Added even more settings
+* 0.2 - Added some settings, new images (apple-touch-icon) and bugfixes
+* 0.1 - Initial Release
 
-## ToDos
-* choose between 'Google Maps' and 'Open Street Map'
-* password-protection
-* control-panel for settings
+## ToDos/Planned features 🛠
+* Choose between 'Google Maps' and 'Open Street Map' (🤷‍♂️)
+* Password protection for non-pseudonymizated location
+* Admin panel for settings (instead of settings file)
+* Caching (🤷‍♂️)
 
-## Requirements
-* PHP
-* a browser
-* an App to push the location (like [Big Bro GPS](https://itunes.apple.com/de/app/big-bro-gps/id672699424?mt=8))
+## Resources 💖
+* OpenGraph-Image by [@rrruthie](https://unsplash.com/photos/a6mfMjCFkII) (CC 0)
 
-## Demo
-* [Demo](http://j.mp/woistjan)
-
-## Changelog
-* 0.1 Initial Release
-* 0.2 Added some settings, new images (apple-touch-icon) and bugfixes
-
-## License
-LivePosition is freely distributable under the terms of the GPL v2 license.
-
-## Created by
-* Gehirnfussel ([Twitter ](http://twitter.com/gehirnfussel)| [ App.net](http://alpha.app.net/gehirnfussel))
+## License 📜
+MIT License
