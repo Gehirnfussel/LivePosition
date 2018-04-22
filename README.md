@@ -3,7 +3,7 @@ Shows the location of a person/smartphone on a map.
 
 ## About 🐝
 Initially this project was a fork of "[Big Brother GPS](http://bk.gnarf.org/creativity/bigbrothergps/)".
-But since that project seems dead (and the iOS App also has not received any updates since 2014), I have now rewritten most of my original code.
+Since that project seems unmaintained (the iOS App also did not received any updates since 2014), I have now rewritten most of my original code.
 
 Location updates are now provided by "[PhoneTrack](https://gitlab.com/eneiluj/phonetrack-oc)" and [OwnTracks](http://owntracks.org).
 
@@ -24,13 +24,14 @@ Location updates are now provided by "[PhoneTrack](https://gitlab.com/eneiluj/ph
 * 0.1 - Initial Release
 
 ## ToDos/Planned features 🛠
-* Choose between 'Google Maps' and 'Open Street Map' (🤷‍♂️)
+* Choose between 'Google Maps' and 'Open Street Map' (🤷‍♂)
 * Password protection for non-pseudonymizated location
 * Admin panel for settings (instead of settings file)
-* JSON caching (🤷‍♂️)
+* JSON caching (🤷‍♂)
 
 ## Resources 💖
 * OpenGraph-Image by [@rrruthie](https://unsplash.com/photos/a6mfMjCFkII) (CC 0)
+* Marker.svg (CC-BY-SA) 2018 Jan Jastrow
 
 ## License 📜
 MIT License
